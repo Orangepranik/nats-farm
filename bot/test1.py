@@ -1,3 +1,3 @@
-s = 'http://7ALBGd:JyWGJz:193.254.234.51:8000'
-print(s.split(":"))
-print(s)
+import datetime
+current_time = int((datetime.datetime.now()).timestamp())
+print(datetime.datetime.fromtimestamp(current_time)+datetime.timedelta(hours=8))

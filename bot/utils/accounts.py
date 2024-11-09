@@ -39,10 +39,7 @@ class Accounts:
         """
         parse_sessions = self.parse_sessions()
 
-        print(parse_sessions)
-
         accounts_from_json = load_from_json('sessions/accounts.json')
-
 
         registered_accs = []
         unregistered_accs = []
@@ -71,11 +68,55 @@ class Accounts:
                 form_data_account['acces_token'] = acces_token
                 form_data_account['user_agent'] = acc.get('user_agent')
                 form_data_account['proxy'] = acc.get('proxy')
+                form_data_account['last_start_farm'] = acc.get('last_start_farm')
                 data.append(form_data_account)
             else:
                 data.append(acc)
         for acc in accs.get('registered_accs'):
-            data.append(acc)
+            if acc.get('session_name') == session_name: 
+
+                form_data_account = {}
+                form_data_account['session_name'] = session_name
+                form_data_account['refresh_token'] = refresh_token
+                form_data_account['acces_token'] = acces_token
+                form_data_account['user_agent'] = acc.get('user_agent')
+                form_data_account['proxy'] = acc.get('proxy')
+                form_data_account['last_start_farm'] = acc.get('last_start_farm')
+                data.append(form_data_account)
+            else:
+                data.append(acc)
+        json_ = json.dumps(data, indent=4)
+        with open('sessions/accounts.json', 'w') as json_file:
+            json_file.write(json_)
+
+    async def set_last_start_farm(self, session_name: str, last_start_farm: int):
+        accs = await self.get_accounts()
+        data = []
+        for acc in accs.get('unregistered_accs'):
+            if acc.get('session_name') == session_name: 
+                form_data_account = {}
+                form_data_account['session_name'] = session_name
+                form_data_account['refresh_token'] = acc.get('refresh_token')
+                form_data_account['acces_token'] = acc.get('acces_token')
+                form_data_account['user_agent'] = acc.get('user_agent')
+                form_data_account['proxy'] = acc.get('proxy')
+                form_data_account['last_start_farm'] = last_start_farm
+                data.append(form_data_account)
+            else:
+                data.append(acc)
+        for acc in accs.get('registered_accs'):
+            if acc.get('session_name') == session_name: 
+
+                form_data_account = {}
+                form_data_account['session_name'] = session_name
+                form_data_account['refresh_token'] = acc.get('refresh_token')
+                form_data_account['acces_token'] = acc.get('acces_token')
+                form_data_account['user_agent'] = acc.get('user_agent')
+                form_data_account['proxy'] = acc.get('proxy')
+                form_data_account['last_start_farm'] = last_start_farm
+                data.append(form_data_account)
+            else:
+                data.append(acc)
         json_ = json.dumps(data, indent=4)
         with open('sessions/accounts.json', 'w') as json_file:
             json_file.write(json_)

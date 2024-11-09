@@ -13,5 +13,4 @@ headers = {
     'Sec-Ch-Ua-mobile': '?1',
     'Sec-Ch-Ua-platform': '"Android"',
     'User-Agent': 'Mozilla/5.0 (Linux; Android 13.0; SM-A057GZKUEUC) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.7.8566.60 Mobile Safari/537.36',
-    'X-Requested-With': 'org.telegram.messenger'
 }
